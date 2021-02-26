@@ -3,7 +3,6 @@ import React, { useState } from 'react';
 function LoginForm({ handleAuth }) {
 	const [state, setState] = useState({
 		email: '',
-		password: '',
 	});
 
 	const handleChange = (evt) => {
@@ -19,15 +18,11 @@ function LoginForm({ handleAuth }) {
 			<h2>Log In</h2>
 			<label>
 				Email
-				<input type='email' name='email' value={state.email} onChange={handleChange} required />
-			</label>
-			<br />
-			<label>
-				Password
 				<input
-					type='password'
-					name='password'
-					value={state.password}
+					type='email'
+					placeholder='me@memail.com'
+					name='email'
+					value={state.email}
 					onChange={handleChange}
 					required
 				/>
