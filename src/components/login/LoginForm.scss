@@ -1,0 +1,18 @@
+.login-form {
+	padding: 30px 25px;
+	place-items: center;
+	margin: 0 auto;
+	justify-content: center;
+	width: 100%;
+	background-color: rgb(237, 234, 234);
+
+	input[type='email'] {
+		margin-left: 12px;
+	}
+
+	input {
+		border: 1px solid gray;
+		border-radius: 3px;
+		padding: 3px 10px 3px 10px;
+	}
+}

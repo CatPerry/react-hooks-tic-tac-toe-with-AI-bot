@@ -1,63 +1,55 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 
-export function useApiHandlers(email) {
-	const [isAuthorized, setIsAuthorized] = useState(false);
-
-	const baselineUrl = (action) =>
+const baselineUrl = (action) =>
 		`https://d9u7x85vp9.execute-api.us-east-2.amazonaws.com/production/${action}`;
 
-	useEffect(() => {
-		email ? checkUserAuth(email) : setMoveGetNext();
-	}, []);
-
-	function checkUserAuth(email) {
-		fetch(baselineUrl('auth'), {
-			method: 'POST',
-			mode: 'cors',
-			body: JSON.stringify(email),
+export async function checkUserAuth(email) {
+	await fetch(baselineUrl('auth'), {
+		method: 'POST',
+		mode: 'cors',
+		headers: {
+			'Content-Type': 'application/json',
+		},
+		body: JSON.stringify(email),
+	})
+		.then((resp) => {
+			if (resp.ok) {
+				return resp.json();
+			}
 		})
-			.then((resp) => {
-				resp.json();
-			})
-			.then((data) => {
-				console.log(data);
-				if (data.success === true) {
-					setIsAuthorized(true);
-					sessionStorage.setItem('bearerToken', data.token);
-				}
-			})
-			.catch((err) => console.log(err));
-	}
-
-	function setMoveGetNext(boardData) {
-		const token = sessionStorage.getItem('bearerToken');
-		if (isAuthorized && token.length) {
-			fetch(baselineUrl('engine'), {
-				method: 'POST',
-				mode: 'cors',
-				headers: {
-					Authorization: `Bearer ${token}`,
-					'Content-Type': 'application/json',
-				},
-				body: JSON.stringify(boardData),
-			})
-				.then((resp) => {
-					resp.json();
-				})
-				.then((data) => {
-					console.log(data);
-					if (data.success === true) {
-						return data.board;
-					}
-				})
-				.catch((err) => console.log(err));
-		}
-	}
-
-	return {
-		isAuthorized,
-		checkUserAuth,
-		setMoveGetNext,
-	};
+		.then((data) => {
+		sessionStorage.setItem('bearerToken', data.token);
+	})
+	.catch((err) => console.log(err));
 }
 
+export async function setMoveGetNext(boardData, setMoves, setIsXsTurn) {
+	console.log('_+_+__+_+_boardData', boardData);
+	const token = sessionStorage.getItem('bearerToken');
+
+	if (token.length) {
+		fetch(baselineUrl('engine'), {
+			method: 'POST',
+			mode: 'cors',
+			headers: {
+				Authorization: `Bearer ${token}`,
+				'Content-Type': 'application/json',
+			},
+			body: boardData,
+		})
+			.then((resp) => {
+				if (resp.ok) {
+					return resp.json();
+				}
+			})
+			.then((data) => {
+				setIsXsTurn(true);
+				setMoves(data.board);
+				return data.board;
+			})
+			.catch((err) => console.log(err));
+	} else {
+ 			sessionStorage.setItem('bearerToken', null);
+	}
+
+}

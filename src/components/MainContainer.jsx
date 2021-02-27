@@ -1,19 +1,22 @@
+import { checkUserAuth } from './../api/apiHandlers';
+import Header from './Header';
 import LoginForm from './login/LoginForm';
-import React, { useEffect, useState } from 'react';
-import { useApiHandlers } from './../api/apiHandlers';
+import React from 'react';
+import TTTBoard from './../components/game/tic-tac-toe/TTTBoard';
 
 function MainContainer() {
-	const [userEmail, setUserEmail] = useState('');
-	// const [isAuthorized, setIsAuthorized] = useState(false);
-	const handleAuth = (evt) => {
+	const authToken = sessionStorage.getItem('bearerToken');
+
+	const handleAuth = (evt, data) => {
 		evt.preventDefault();
-		setUserEmail(evt.target.value);
-		useApiHandlers.checkUserAuth({ email: evt.target.value });
+		checkUserAuth(data);
 	};
-	const { isAuthorized, heckUserAuth, setMoveGetNext } = useApiHandlers(userEmail);
 
 	return (
-		<div>{!isAuthorized ? <LoginForm handleAuth={handleAuth} /> : <div>You are set</div>}</div>
+		<main>
+			<Header />
+			{!authToken ? <LoginForm handleAuth={handleAuth} /> : <TTTBoard />}
+		</main>
 	);
 }
 

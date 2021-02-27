@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import './LoginForm.scss';
 
 function LoginForm({ handleAuth }) {
 	const [state, setState] = useState({
@@ -14,7 +15,7 @@ function LoginForm({ handleAuth }) {
 	};
 
 	return (
-		<form onSubmit={(evt) => handleAuth(evt, state)}>
+		<form className='login-form' onSubmit={(evt) => handleAuth(evt, state)}>
 			<h2>Log In</h2>
 			<label>
 				Email
