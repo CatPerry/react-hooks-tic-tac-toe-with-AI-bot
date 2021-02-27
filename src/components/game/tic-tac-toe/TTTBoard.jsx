@@ -5,10 +5,12 @@ import './TTTBoard.scss';
 function TTTBoard() {
 	const [moves, setMoves] = useState(Array(3).fill(Array(3).fill('')));
 	const [isXsTurn, setIsXsTurn] = useState(true);
-	const authToken = sessionStorage.getItem('bearerToken');
 
 	function makeMove(move) {
 		if (isXsTurn) {
+			// If there's already a move in that square, return.
+			// Stringify is a hack to workaround a bug that wouldnt allow moves on
+			// the first row, unles there were moves on other rows first. TODO: fix bug.
 			if (moves[move] && JSON.stringify(moves[move]) !== JSON.stringify(['', '', ''])) {
 				return;
 			}
@@ -21,6 +23,8 @@ function TTTBoard() {
 		}
 	}
 
+	// The AI consumes and returns chucked data, but to work with it in the UI
+	// I flatten it below and rechuck it here before sending to server
 	function chunkMoves(moves) {
 		const movesCopy = [...moves];
 		let chunkedMoves = [];
@@ -31,6 +35,7 @@ function TTTBoard() {
 		return chunkedMoves;
 	}
 
+	// Flatten to manipulate and consume in the UI components
 	function flattenMoves(moves) {
 		const formattedMoves = [...[].concat.apply([], moves)];
 		setMoves(formattedMoves);
@@ -40,11 +45,13 @@ function TTTBoard() {
 		return setMoveGetNext(JSON.stringify({ board: chunkMoves(moves) }), flattenMoves, setIsXsTurn);
 	}
 
+	// Make a call to the backend bot only if it isnt X's turn, which is you
+	// the main player; whereas the AI bot is Os
 	useEffect(() => {
 		if (!isXsTurn) {
 			setTimeout(() => {
 				getNextMove();
-			}, 1500);
+			}, 1000);
 		}
 	}, [moves]);
 
