@@ -24,7 +24,6 @@ export async function checkUserAuth(email) {
 }
 
 export async function setMoveGetNext(boardData, setMoves, setIsXsTurn) {
-	console.log('_+_+__+_+_boardData', boardData);
 	const token = sessionStorage.getItem('bearerToken');
 
 	if (token.length) {

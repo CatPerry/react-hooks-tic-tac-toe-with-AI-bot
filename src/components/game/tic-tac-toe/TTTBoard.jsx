@@ -8,13 +8,10 @@ function TTTBoard() {
 	const authToken = sessionStorage.getItem('bearerToken');
 
 	function makeMove(move) {
-		console.log('isXsTurn-A', isXsTurn);
 		if (isXsTurn) {
 			if (moves[move] && JSON.stringify(moves[move]) !== JSON.stringify(['', '', ''])) {
-				console.log('ive already got something going on here', moves[move]);
 				return;
 			}
-			console.log('typeof ', typeof moves[move], moves[move]);
 			setMoves((items) => {
 				const movesCopy = [...[].concat.apply([], items)];
 				movesCopy[move] = 'X';
@@ -36,23 +33,18 @@ function TTTBoard() {
 
 	function flattenMoves(moves) {
 		const formattedMoves = [...[].concat.apply([], moves)];
-		console.log('moves', moves, 'formatMoves', formattedMoves);
-		console.log('isXsTurn-D', isXsTurn);
 		setMoves(formattedMoves);
 	}
 
 	function getNextMove() {
-		console.log('isXsTurn-C', isXsTurn);
 		return setMoveGetNext(JSON.stringify({ board: chunkMoves(moves) }), flattenMoves, setIsXsTurn);
 	}
 
 	useEffect(() => {
-		console.log(moves, chunkMoves(moves));
-		console.log('isXsTurn-B', isXsTurn);
 		if (!isXsTurn) {
 			setTimeout(() => {
 				getNextMove();
-			}, 2000);
+			}, 1500);
 		}
 	}, [moves]);
 
