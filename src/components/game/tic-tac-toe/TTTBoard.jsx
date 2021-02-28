@@ -55,6 +55,7 @@ function TTTBoard() {
 		}
 	}, [moves]);
 
+	// Buttons are key for accessibility
 	return (
 		<div className='board-container'>
 			<table>

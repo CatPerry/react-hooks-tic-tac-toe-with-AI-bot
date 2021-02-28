@@ -1,5 +1,3 @@
-import React, { useState } from 'react';
-
 const baselineUrl = (action) =>
 		`https://d9u7x85vp9.execute-api.us-east-2.amazonaws.com/production/${action}`;
 
