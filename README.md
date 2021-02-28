@@ -1,19 +1,20 @@
-# Build a Classic: Tic-tac-toe Using React Hooks
+# Build a Classic: Tic-Tac-Toe Using React Hooks
 
 This simple app uses the following features
 
-- React Hooks
-- Componentization
-- JavaScript methods like concat and splice to accomplish flatten and chunking
-- Limited but exisent built in accessibility
-- Login Form that validates the email address
+- React Hooks - for a fully functional programming approach
+- Componentization - lends toward scaling of game types and app as a whole
+- JavaScript methods like concat and splice to accomplish flattening and chunking to get the data to mirror what the API expects
+- Limited but exisent built-in accessibility, particularly with buttons as the main interactive element, which can be control with hands-free accessible tools; and nice large font
+- Login Form that validates the email address. There's no user, perse, here but I have the email to create a bearer token with.
 - Play with the computer! Uses an [Open API backend](https://d9u7x85vp9.execute-api.us-east-2.amazonaws.com/production/api-docs/#/)
-- JWT Token store in session storage
-- Scss/Sass
+- JWT Token stored in session storage
+- Scss/Sass for extensibility/scability
 
 WIP - Things that arent included but could be:
 ● Loading spinner
 ● No finished state/screen, or a “You win” / “AI
 wins” or Draw messaging
-● Board resest
+● No board reset button
 ● Fix sizing of button vs parent`td` square
+● Simple tweks to make it mobile responsive
