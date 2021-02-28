@@ -1,5 +1,7 @@
 # Build a Classic: Tic-Tac-Toe Using React Hooks
 
+![React Hooks Tic Tac Toe with AI Bot](https://github.com/CatPerry/react-hooks-tic-tac-toe-with-AI-bot/blob/master/public/React_Hooks_Tic_Tac_Toe.png?raw=true)
+
 This simple app uses the following features
 
 - React Hooks - for a fully functional programming approach
